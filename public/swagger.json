@@ -1,0 +1,84 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "接口文档",
+        "description": "接口描述",
+        "termsOfService": "",
+        "license": {
+            "name": "demo.tp6.com",
+            "url": "http://demo.tp6.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/swagger": {},
+        "/api": {
+            "get": {
+                "tags": [
+                    "用户列表信息"
+                ],
+                "summary": "用户列表",
+                "operationId": "app\\api\\controller\\v1\\Index::index",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/article": {
+            "get": {
+                "tags": [
+                    "文章管理"
+                ],
+                "summary": "文章列表",
+                "operationId": "article",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "description": "token",
+                        "schema": {
+                            "type": "string",
+                            "default": "123456"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "页码",
+                        "schema": {
+                            "type": "int",
+                            "default": "1"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "行数",
+                        "schema": {
+                            "type": "int",
+                            "default": "10"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The User"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "Authorization",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
