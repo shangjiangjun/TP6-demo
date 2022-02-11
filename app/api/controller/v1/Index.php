@@ -69,7 +69,7 @@ class Index extends BaseController
         $info = $code->getUser(1);
         dump($info->toArray());
 
-        Log::debug('日志信息:{username}', ['username' => $info->username]);
+        // Log::debug('日志信息:{username}', ['username' => $info->username]);
 
         return view('', ['token' => $token, 'goodsNum' => $goodsNum]);
     }
@@ -82,10 +82,10 @@ class Index extends BaseController
         $base = Base::getBase();
         dump($base);
 
-        $lists = $userModel->getUsers();
-        dump('------------');
-        dump($lists->toArray());
-        dump('------------');
+//        $lists = $userModel->getUsers();
+//        dump('------------');
+//        dump($lists->toArray());
+//        dump('------------');
 
         // $user = User::find(1);
         // dump($user->toArray());
@@ -102,7 +102,11 @@ class Index extends BaseController
 
         // $this->redis->setByCacheValue('api', 'user', $user);
         $data = $this->redis->getByCacheValue('api', 'user');
-        dump($data->toArray());
+        if (!empty($data)) {
+            dump($data->toArray());
+        } else {
+            dump('无用户数据');
+        }
 
         // $this->redis->setByCacheValue('base', 'index', [1,2,3]);
         // dump($this->redis->removeCacheValue('base', 'index'));

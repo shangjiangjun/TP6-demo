@@ -4,6 +4,7 @@ declare (strict_types = 1);
 namespace app\api\controller\v1;
 
 use app\BaseController;
+use app\RedisTransfer;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT as JWTUtil;
 use think\App;
@@ -11,6 +12,8 @@ use think\facade\Db;
 
 class OAuth extends BaseController
 {
+    protected $redis;
+
     protected $client;
 
     protected $server;
@@ -18,10 +21,14 @@ class OAuth extends BaseController
     public function __construct(App $app)
     {
         parent::__construct($app);
+        $this->redis = new RedisTransfer();
 
-        $dsn = "mysql:dbname=tp6_demo;host=127.0.0.1";
-        $username = "root";
-        $password = "root";
+        $dbName = env('DATABASE_DATABASE');
+        $dbHost = env('DATABASE_HOSTNAME');
+
+        $dsn = "mysql:dbname={$dbName};host={$dbHost}";
+        $username = env('DATABASE_USERNAME');
+        $password = env('DATABASE_PASSWORD');
 
         \OAuth2\Autoloader::register();
 
@@ -60,10 +67,9 @@ class OAuth extends BaseController
 
     public function check()
     {
-        // dump($this->request);
         $request = \OAuth2\Request::createFromGlobals();
         dump($request->headers);
-        $request->headers['authorization'] = $request->headers['AUTHORIZATIONS'];
+        $request->headers['authorization'] = $request->headers['AUTHOR2'];
         /*if ($this->user_client == 1) {
             $info = Db::table('oauth_clients')->field('client_id, client_secret')->where('id', $this->user_client)->find();
             $request->request['client_id'] = $info["client_id"];
@@ -79,6 +85,19 @@ class OAuth extends BaseController
         dump($token);
         // 执行业务
         echo "User ID associated with this token is {$token['user_id']}";
+
+        // 存储用户信息
+
+    }
+
+    public function userLogin($username)
+    {
+
+    }
+
+    public function getUser()
+    {
+
     }
 
 
