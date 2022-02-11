@@ -28,9 +28,10 @@ Route::group('user', function () {
 
 Route::group('', function () {
     Route::get('', 'index/index');
+    Route::get('index2', 'index/index2');
 
     // jwt 认证
-    Route::get('jwt', 'OAuth/createjwt');
+    Route::get('jwt', 'OAuth/createJwt');
     Route::post('verify-jwt', 'OAuth/verifyJwt');
 
     // oauth2.0 密码模式
